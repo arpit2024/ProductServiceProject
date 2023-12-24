@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.example</groupId>
     <artifactId>ProductServiceProject</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-BETA</version>
     <name>ProductServiceProject</name>
     <description>ProductServiceProject</description>
     <properties>
@@ -42,6 +42,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
     </dependencies>
 
