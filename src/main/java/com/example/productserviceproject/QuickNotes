@@ -1,0 +1,24 @@
+
+Annotations:-
+Spring is working on lot of Annotations-(Annotations for every little task)
+
+Now spring to be able to know that a particular class is a important class
+Springs Expects us to annotate that particular class
+Ex- If it's a Controller we annotated it with @RestController
+it tells that Hey Spring Please go through the code of this particular class, within the code of the class
+there are some imp things that you need to take care of.
+
+
+So Just Think of these Annotation- Service, Controller,Configurations as Markers.All of these Annotations define them as Special Class
+
+for Ex- this part is within Application Configuration Class
+ @Bean
+    public RestTemplate  createRestTemplate()
+    {
+        return new RestTemplateBuilder().build();
+    }
+
+ so if we put this any controller class, still it would be considered/found, so all of these are just Markers
+
+*) so if anything is present in Spring's Application Contexte we can use it anywhere
+->so config package is something which we want to use overall
