@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.List;
 
 //This class just calls the API- (Talks to the FakeStore API)
 
@@ -18,17 +19,17 @@ public class FakeStoreProductService implements ProductService{
 
     private RestTemplate restTemplate;
 
-//so create a constructor   of fakestoreservice for the instance/variable of type RestTemplate
-//@Autowired-
+//so create a constructor of fakeStoreService for the instance/variable of type RestTemplate
+
     @Autowired
-    // The reason i am able to autowire this is, check if ProductService is also a special class->yes,
-    // there ia an Annotaion of service/one of the implementation of ProductService is a special class
-    // so spring will automatically create an object of that and put it in Application Context.
+    // The reason i am able to autowire this is, check if ProductService is also a special class->if yes,
+    // there ia an Annotation of service/one of the implementation of ProductService is a special class than
+    // spring will automatically create an object of that and put it in Application Context.
     public FakeStoreProductService(RestTemplate restTemplate){
         this.restTemplate=restTemplate;
     }
 /*
-For the Autowired Part- if i want to inject a bean to other class how will i do it?
+For the Autowired Part-if i want to inject a bean to other class how will i do it?
 -> Using Constructor
 in this constructor  i will take object of the class i wanted to inject
 And i will mark that particular thing with Autowire
@@ -37,13 +38,13 @@ And i will mark that particular thing with Autowire
 /*
     Summarization
 
-    Hey Spring in the fakestoreProductService Class i need an Object of rest Template and i am not going to create an object of it
+    Hey Spring in the fakeStoreProductService Class i need an Object of rest Template and i am not going to create an object of it
     Please Autowire the object of RestTemplate yourself,
     how will spring do it.
     spring saved the object of restTemplate in Application Context(App Config class),
     so spring will put below part
         new RestTemplateBuilder().build()
-    from class Application Config that it had created at the start of the Application to this particular place in Services-FakeStoreProductService method in class(above)
+    from class-Application Config that it had created at the start of the Application to this particular place in Services-FakeStoreProductService method in class(above)
     @Autowired
     public FakeStoreProductService(RestTemplate restTemplate){
  */
@@ -52,7 +53,7 @@ And i will mark that particular thing with Autowire
     private Product convertFakeStoreProductToProduct(FakeStoreProductDto fakeStoreProduct){
 /*
 Need of this Method:-
-so in below SingleProduct methos i am calling Api details using the FakeStore Dto object for matching/mapping data similar to the JSON(Data pack obtained form the URl)
+so in below SingleProduct method i am calling Api details using the FakeStore Dto object for matching/mapping data similar to the JSON(Data pack obtained form the URl)
 
 But our service wants us to return the Product type, so i will have to convert from ProductDto to Product.
 so writing this method cto convert it.
@@ -84,14 +85,29 @@ return the object in the form(product) that we require from the ProductDto type.
         return convertFakeStoreProductToProduct(productDto);
     }
 
-//    public ArrayList<Product> getALLProducts(){
-//        FakeStoreProductDto AllProductDto=restTemplate.getForObject(
+    @Override
+    public List<Product> getALLProducts(){
+//        "https://fakestoreapi.com/products",
+//                FakeStoreProductDto[] response =restTemplate.getForObject(
 //                "https://fakestoreapi.com/products",
-//                FakeStoreProductDto.class
+//                FakeStoreProductDto[].class
 //        );
-//
-//
-//    }
+        // runtime
+        FakeStoreProductDto[] response = restTemplate.getForObject(
+                "https://fakestoreapi.com/products",
+                FakeStoreProductDto[].class
+        );
+
+
+
+        //getting data in Json from the url, converting each json obj to our
+        // dto(Product) object and adding all those products to list and returning thme
+        List<Product> answer=new ArrayList<>();
+        for(FakeStoreProductDto dto: response ){
+            answer.add(convertFakeStoreProductToProduct(dto));
+        }
+        return answer;
+    }
 }
 
 

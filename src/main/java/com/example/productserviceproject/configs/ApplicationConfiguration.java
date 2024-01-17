@@ -20,7 +20,7 @@ public class ApplicationConfiguration {
     }
 // i am creating a Bean of type Rest template
 
-// if we create two beans of rest template it would through eroor as spring
+// if we create two beans of rest template it would through an error as spring
 // will get confuse to which object need to be injected
 }
 
@@ -32,8 +32,8 @@ if i have a object and i call a method on that object which is behind the scene 
 i will not be required multiple instances of the object, single object is enough.And there is possibility of many
 classes within my CodeBase require to call 3rd party API's.
 
-if Above is True than Do we agree having an object to call an 3rd party api is good.
-now the Question is- is there a Feature of Spring that can allow me to keep an object at a common Place and in whatever class we need we can inject that.
+if Above is True than Do we agree having an object to call 3rd party api is good.
+now the Question is-> is there a Feature of Spring that can allow me to keep an object at a common Place and in whatever class we need we can inject that.
 -> This common Pace is called Spring's Application Context, And the objects that we put in the Spring Application Context are called as BEANS.
 
 

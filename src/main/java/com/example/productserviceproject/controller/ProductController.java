@@ -1,6 +1,6 @@
 package com.example.productserviceproject.controller;
 
-// Controller will get the request from the user and then call th e relevant service
+// Controller will get the request from the user and then call the relevant service
 //when it get the response from service controller will give it back to user
 import com.example.productserviceproject.models.Product;
 import com.example.productserviceproject.services.ProductService;
@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 // Making a class Serve API's by putting rest controller Annotation
 // Hey Spring this is a special class, in this class i am going to imlpement some API's
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 
 @RequestMapping("/products")
 // Adding a common prefix of all of the methods
-//RequestMapping annotation is used to map web requests onto specific handler classes and/or handler methods.
+//RequestMapping annotation is used to map web requests onto specific handler classes / handler methods.
 // @RequestMapping can be applied to the controller class as well as methods
     public class ProductController{
 
@@ -30,8 +32,9 @@ import java.util.ArrayList;
     }
 
     @GetMapping
-    public ArrayList<Product> getALLProducts(){
-        return new ArrayList<>();
+    public List<Product> getALLProducts(){
+        //return new ArrayList<>();
+        return productService.getALLProducts();
     }
 
     @GetMapping("/{id}")
@@ -40,7 +43,7 @@ import java.util.ArrayList;
         return productService.getSingleProduct(id);
     }
 
-//Typically when we have to send lotof parameters in request i.e complete object
+//Typically when we have to send lot of parameters in request i.e complete object
 //we can send it in the part of body object/Data
 //Using @RequestBody annotation i will get the parameters/Data in the Body
     @PostMapping
@@ -50,7 +53,7 @@ import java.util.ArrayList;
         return p;
     }
 
-    // Partial Update we use Patch
+//Partial Update we use Patch
     @PatchMapping("/{id}")
     public Product updateProduct(@PathVariable("id") Long id,@RequestBody Product product){
         return new Product();
