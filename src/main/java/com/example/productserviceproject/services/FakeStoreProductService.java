@@ -4,7 +4,10 @@ import com.example.productserviceproject.dtos.FakeStoreProductDto;
 import com.example.productserviceproject.models.Category;
 import com.example.productserviceproject.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpMessageConverterExtractor;
+import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -49,7 +52,6 @@ And i will mark that particular thing with Autowire
     public FakeStoreProductService(RestTemplate restTemplate){
  */
 
-//----------------------------------------------------------------------------------------------------------------------------------
     private Product convertFakeStoreProductToProduct(FakeStoreProductDto fakeStoreProduct){
 /*
 Need of this Method:-
@@ -86,6 +88,28 @@ return the object in the form(product) that we require from the ProductDto type.
     }
 
     @Override
+    public Product replaceproduct(Long id, Product product) {
+        FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
+        fakeStoreProductDto.setTitle(product.getTitle());
+        fakeStoreProductDto.setPrice(product.getPrice());
+        fakeStoreProductDto.setImage(product.getDescription());
+        fakeStoreProductDto.setImage(product.getImageUrl());
+        //restTemplate.exchange();
+        //we are not using restTemplate.Put() For object because the API is returning us a JSON but
+        // put returns a void ,so to avoid that we are using exchange
+
+
+        //Here we are using one of the methods - public <T> T postForObject from the restTemplate Library body
+        RequestCallback requestCallback = restTemplate.httpEntityCallback(fakeStoreProductDto, FakeStoreProductDto.class);
+        HttpMessageConverterExtractor<FakeStoreProductDto> responseExtractor =
+                new HttpMessageConverterExtractor<>(FakeStoreProductDto.class, restTemplate.getMessageConverters());
+        FakeStoreProductDto response = restTemplate.execute("https://fakestoreapi.com/products/" + id, HttpMethod.PUT, requestCallback, responseExtractor);
+
+        return convertFakeStoreProductToProduct(response);
+    }
+
+
+    @Override
     public List<Product> getALLProducts(){
 //        "https://fakestoreapi.com/products",
 //                FakeStoreProductDto[] response =restTemplate.getForObject(
@@ -107,6 +131,11 @@ return the object in the form(product) that we require from the ProductDto type.
             answer.add(convertFakeStoreProductToProduct(dto));
         }
         return answer;
+
+
+
+
+
     }
 }
 

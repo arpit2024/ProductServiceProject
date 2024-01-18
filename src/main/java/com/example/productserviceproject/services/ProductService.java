@@ -13,4 +13,6 @@ public interface ProductService {
     Product getSingleProduct(Long id);
 
     List<Product> getALLProducts();
+
+    Product replaceproduct(Long id, Product product);
 }

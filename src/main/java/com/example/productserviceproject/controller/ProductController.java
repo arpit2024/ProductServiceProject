@@ -5,6 +5,8 @@ package com.example.productserviceproject.controller;
 import com.example.productserviceproject.models.Product;
 import com.example.productserviceproject.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -32,9 +34,14 @@ import java.util.List;
     }
 
     @GetMapping
-    public List<Product> getALLProducts(){
+    public ResponseEntity<List<Product>> getALLProducts(){
+        // Response Entity allow you to put,other data like status of the response. ect
+        ResponseEntity<List<Product>>response =new ResponseEntity<>(
+                productService.getALLProducts(), HttpStatus.NOT_FOUND
+        );
+        return response;
         //return new ArrayList<>();
-        return productService.getALLProducts();
+        //return productService.getALLProducts();
     }
 
     @GetMapping("/{id}")
