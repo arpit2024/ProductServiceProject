@@ -1,0 +1,21 @@
+@Controller: This annotation marks the class as a Spring MVC controller, indicating that it will handle HTTP
+requests.
+
+@RequestMapping("/products"): This annotation specifies the base URL path for all the methods in the controller.
+In this case, all endpoints in this controller will start with "/products".
+
+private ProductService productService;: This line declares a private field of type ProductService in the controller.
+
+@Autowired: This annotation is used for constructor injection. It automatically injects an instance of
+ProductService into the controller when the controller is created.
+
+public ProductController(ProductService productService): This is the constructor for ProductController.
+The ProductService parameter is annotated with @Autowired, which means that when an instance of ProductController is created,
+Spring will automatically provide an instance of a class that implements ProductService. This is known as dependency injection.
+
+The ProductController class is expected to have additional methods (not shown in the provided code snippet) that handle HTTP requests
+related to products, such as retrieving a list of products (getALLProducts()), getting a single product by ID (getSingleProduct()),
+adding a new product (addNewProduct()), updating a product (updateProduct() and replaceProduct()), and deleting a product (deleteProduct()).
+
+The actual implementation of these methods will involve interactions with the ProductService to perform business logic related to products.
+For example, the getSingleProduct() method will call the ProductService to retrieve a single product from the database.

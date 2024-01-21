@@ -16,3 +16,7 @@ public interface ProductService {
 
     Product replaceproduct(Long id, Product product);
 }
+/*
+any class implementing ProductService should provide functionality to retrieve
+a single product by its ID.
+ */

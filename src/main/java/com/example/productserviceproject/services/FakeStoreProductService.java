@@ -25,7 +25,7 @@ public class FakeStoreProductService implements ProductService{
 //so create a constructor of fakeStoreService for the instance/variable of type RestTemplate
 
     @Autowired
-    // The reason i am able to autowire this is, check if ProductService is also a special class->if yes,
+    // The reason i am able to autowire this is........check if ProductService is also a special class->if yes,
     // there ia an Annotation of service/one of the implementation of ProductService is a special class than
     // spring will automatically create an object of that and put it in Application Context.
     public FakeStoreProductService(RestTemplate restTemplate){
@@ -111,21 +111,29 @@ return the object in the form(product) that we require from the ProductDto type.
 
     @Override
     public List<Product> getALLProducts(){
-//        "https://fakestoreapi.com/products",
-//                FakeStoreProductDto[] response =restTemplate.getForObject(
-//                "https://fakestoreapi.com/products",
-//                FakeStoreProductDto[].class
-//        );
-        // runtime
-        FakeStoreProductDto[] response = restTemplate.getForObject(
+/* Here List Uses Generics
+Because of Java Generics(concept- type erasure) we are not able to get the type of the list during Runtime,
+    as type erasure erases the data type(fakeStoreDto) after compiling the code.
+        "https://fakestoreapi.com/products",
+                List<FakeStoreProductDto> response =restTemplate.getForObject(
                 "https://fakestoreapi.com/products",
+                FakeStoreProductDto.class);
+
+so when we put debug point and check-> all the product details were converted to hashmap-But why
+Because this info- i.e List of FakesStoreProductDto is not available at runtime, so java(Rest template) internally tries to convert it into HashMap
+
+why HashMap-> what library does is, whatever JSON it gets- it tries to convert that into whatever best possible Object(Key-Value Pair)
+For that reason in java similar to List we have array , since we don't have generics issue in Array we can use it.
+*/
+        FakeStoreProductDto[] response = restTemplate.getForObject(
+
+                "https://fakestoreapi.com/products",
+                //since .getForObject expects class name as parameter, we are passing array of class name using .class keyword
                 FakeStoreProductDto[].class
         );
+//Although return type of method is in list, we get data in Json from the url,converting each json obj to our
+// dto(Product) object and adding all those products to list and returning theme
 
-
-
-        //getting data in Json from the url, converting each json obj to our
-        // dto(Product) object and adding all those products to list and returning thme
         List<Product> answer=new ArrayList<>();
         for(FakeStoreProductDto dto: response ){
             answer.add(convertFakeStoreProductToProduct(dto));
