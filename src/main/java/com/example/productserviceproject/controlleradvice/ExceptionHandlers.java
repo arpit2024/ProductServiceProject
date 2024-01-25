@@ -50,8 +50,13 @@ public class ExceptionHandlers {
 
         return new ResponseEntity<>(dto,HttpStatus.OK);
         //return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
 
+    }
+/*Use of Dto class object
+we can use dto class object to send the message to the user instead of just throwing exception
+so that when something goes wrong, we can give the client some detail, using which the client can hopefully recover
+ex-  dto.setDetails("Check the product Number , probably it doesn't exist")
+ */
 
 /*
 Note:-

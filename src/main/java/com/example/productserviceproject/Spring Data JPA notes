@@ -1,0 +1,70 @@
+just acting like a proxy.for any real world app DB is a very crucial component and it should be designed with utmost care.
+
+ORM Library
+-----------
+O-> OBJECT
+R-> RELATIONAL
+M-> MAPPING
+It is a programming technique for converting data between incompatible type systems in relational databases and object-oriented programming languages.
+ This creates, in effect, a “virtual object database” that can be used from within the programming language.
+
+*) It will reduce the need for you to write queries.
+*)Based on ORM method call we can perform CRUD operation on DB.
+one Famous example for ORM library- Hibernate
+
+Unless my application is dependent on Hibernate and i want to remove it and move for other, it will require lot of work to switch to other ORM library.
+
+
+so instead of one class directly depending on other- use Interface
+ex- Phone-pe example
+
+By default java has an interface that can be implemented by different ORM
+Those interface is called JPA(Java Persistence API).
+
+Now My application instead of depending on Hibernate directly, it will now depend on JPA.
+JPA will act as a proxy between my application and Hibernate(Hibernate is one of the Implementations of JPA).
+
+Ex:- List(JPA) and ArrayList(Hibernate)
+JPA is an interface and Hibernate is one of the implementation of JPA and talking directly with my Application.
+JPA jpa=new Hibernate();//we can use any other implementation of JPA here.
+jpa.getAllProducts();
+
+
+The code to talk to DB is present in Hibernate and not in my application.
+
+Hibernate Supports multiple DBs like Oracle,MySQL,Postgres etc.
+But internally it can't have code for all the DBs(every DB's have its own queries style).
+
+so we have JDBC for that.
+
+JDBC-> Java DataBase Connectivity
+---------------------------------
+JDBC is a library that has code for all the DBs.Basically it is also an interface.
+it have common methods within it that can be used to talk to any DB.
+ex- connect(),executeQuery(), disconnect(), insert(), update(), delete(), select() etc.
+
+Different DB's such as MySQl will implement these methods/functionalities in their own way.
+
+So this code interacts with DB and returns the result to Hibernate.
+This helps in reducing code bulkiness of Hibernate.
+
+So any DB that has JDBC connector can be used with Hibernate.
+
+<--<--Flow-->-->
+Application->JPA->Hibernate(ORM)->JDBC->JDBC Implementation(based on database)
+
+Flow Explanation:-
+1) Application will call JPA(Interface).
+2) JPA is implemented by ORMs (ex-Hibernate) .
+3) Hibernate will call JDBC(interface) method.
+JDBC is an interface(which has Basic methods) that talks about how to work with One DB.
+4) JDBC will be implemented by Different DataBase (JDBC implementation method).
+5) MySQL(DBMS) is talking to the Database(JDBC implementation will call DB).
+
+
+Q) What is the Flow of simple Database Query in an ORM?
+-> From my application via JPA interface the query goes to an ORm,the ORm executes the Query
+using the JDBC interface,which is implemented by the Drivers of Different Databases
+which finally executes the query on the Database.
+
+
