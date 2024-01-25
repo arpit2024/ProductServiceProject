@@ -1,0 +1,102 @@
+How will the exceptions happen in Reality(Production server)?
+
+In production we should have well defined exception handling mechanism. We should not allow the user to see the exception message.
+We should have a mechanism to show a user friendly error message to the user.
+
+Example:-
+one of the reason for the exception is, the product is not available in the database.
+so if i check the API call for- say product Number 51/61- i get error.
+
+https://fakestoreapi.com/products/51 :- i received an empty response(from API call) as product does not exist in database.
+-> so my RestTemplate wont be able to convert the response to FakeStoreProductDto.
+
+public Product getSingleProduct(Long id) {
+        FakeStoreProductDto productDto = restTemplate.getForObject(
+                //Make a get call for below URL to get the response
+                "https://fakestoreapi.com/products/"+id,
+                FakeStoreProductDto.class
+        );
+
+        But i can check if the product exist or not in Service Class(if the productDto is null or not).
+(1)
+->What Should i do now, Should service return null to the controller and controller return null to the client?
+Ans- Ideal rule of thumb is,Service should return what it wants to return(Service is Business Logic).
+Controller should return what it wants to return(Controller is Presentation Logic).
+ So
+ service should not return null to the controller. If the product is not available, service should throw an exception.
+
+        if(productDto==null){
+            throw new ProductNotFoundException("Product is not available");
+        }
+        return convertFakeStoreProductToProduct(productDto);
+    }
+
+(2)
+Second Thumb Rule- we should try create our own exception class.
+Those exceptions should be well named/defined.
+
+so i have created an Different package called exception and created a class called ProductNotFoundException.
+i have used that ProductNotFoundException in code.
+
+// Service Class-FakeStoreProductService class
+-----------------------------------------------
+i am writing a method in service class to get a single product.
+
+    //also mention throws keyword in method signature.
+    public Product getSingleProduct(Long id) throws ProductNotExistsException {
+        FakeStoreProductDto productDto = restTemplate.getForObject(
+                //Make a get call for below URL to get the response
+                "https://fakestoreapi.com/products/"+id,
+                FakeStoreProductDto.class
+        );
+    if(productDto==null){
+            throw new ProductNotExistsException("Product with id"+id+"doesn't exist");
+        }
+        return convertFakeStoreProductToProduct(productDto);
+
+//Controller - ProductController class
+---------------------------------------
+Q) Now what will Happen in the controller?
+Ans-
+so when my Api calls ProductService.getSingleProduct(51) and if the product is not available in the database,
+then the service will throw an exception and the controller will receive the exception and it will pass the exception to the client.
+
+i will add ProductNotFoundException in the method signature of the controller method.
+->so this method (cantoller) can also throe this exception.
+l am letting the exception been thrown  from the controller,
+
+Now who will actually handle this exception?(create a user friendly message and send it to the client).
+->Controller Advice
+so in my controller advice i will create a method which will handle this exception.
+    @GetMapping("/{id}")
+    public Product getSingleProduct(@PathVariable Long id) throws ProductNotExistsException {
+        return productService.getSingleProduct(id);
+    }
+
+Imp:-
+the reason we are throwing exception in controller too is because we want to handle the exception in controller advice.
+
+-------------------------------------------------------------------------------------------------------------------------------
+Controller Specific Exception Handling:-
+
+we know that the Exception Handler class which we created is For Global level.
+so how do we throw controller specific exception for a particular controller in a separate way(we can customize message per controller)
+->
+     for Example if ProductController class throws ProductNotFoundException, and we want to send a different message to the client.
+     in this case we can define an exceptionhandlers within the controller class itself.
+
+     @ExceptionHandler(ProductNotExistsException.class)
+         public ResponseEntity<Void> handleProductNotExistsException(){
+             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+         }
+
+Q) so now since we have both Global and Local Exception within the ProductController class, which one will be executed?
+->Local Exception Handler will be executed.
+
+Summary:-
+Exception Handlers are executed in the following order:-
+1)Local Exception Handler(Controller level)
+2)Global Exception Handler- Controller Advice
+
+So whenever we have an exception in the controller, the first thing that will be executed is the Local Exception Handler.
+If it is not present that matches the exception  then Global Exception Handler will be executed (Controller Advice will be executed).

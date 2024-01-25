@@ -2,6 +2,7 @@ package com.example.productserviceproject.controller;
 
 // Controller will get the request from the user and then call the relevant service
 //when it get the response from service controller will give it back to user
+import com.example.productserviceproject.Exceptions.ProductNotExistsException;
 import com.example.productserviceproject.models.Product;
 import com.example.productserviceproject.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +34,21 @@ import java.util.List;
         this.productService=productService;
     }
 
+
+
+/*  Response Entity allow you to put->other data like status of the response. ect
+    generally ResponseEntity is recommended from Controller methods-so our controller should not be returning
+    just the body of the response but also the status of the response(the return data type of the controller should be response entity).
+
+    ResponseEntity is a generic class, so we need to specify the type of data that we are going to return.
+    So in this case we are going to return a list of products. so we will specify the type as List<Product>
+
+    Along with Responses Entity we can send Headers as well.usually we use it when we implement Authentication->we will be sendng some data back as headers. */
     @GetMapping
     public ResponseEntity<List<Product>> getALLProducts(){
-        // Response Entity allow you to put,other data like status of the response. ect
         ResponseEntity<List<Product>>response =new ResponseEntity<>(
                 productService.getALLProducts(), HttpStatus.NOT_FOUND
+                // since we have set status as NOT_FOUND, we will get 404 error
         );
         return response;
         //return new ArrayList<>();
@@ -45,8 +56,12 @@ import java.util.List;
     }
 
     @GetMapping("/{id}")
+
     // both id highlighted in green color should of same name,but parameter Long- id can be different name
-    public Product getsingleProduct(@PathVariable("id") Long id){
+    public Product getsingleProduct(@PathVariable("id") Long id)throws ProductNotExistsException{
+        //int x=1/0; written this to check arithmatic exception handler method-
+        // Exceptions explaines detail in controlladvice class Notes
+
         return productService.getSingleProduct(id);
     }
 
@@ -77,4 +92,11 @@ import java.util.List;
 
     }
 
+/*   Explained in Exception Notes 3rd point
+    @ExceptionHandler(ProductNotExistsException.class)
+    public ResponseEntity<Void> handleProductNotExistsException(){
+        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+    }
+
+ */
 }

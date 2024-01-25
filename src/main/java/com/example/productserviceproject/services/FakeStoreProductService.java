@@ -1,5 +1,6 @@
 package com.example.productserviceproject.services;
 
+import com.example.productserviceproject.Exceptions.ProductNotExistsException;
 import com.example.productserviceproject.dtos.FakeStoreProductDto;
 import com.example.productserviceproject.models.Category;
 import com.example.productserviceproject.models.Product;
@@ -72,13 +73,17 @@ so writing this method cto convert it.
         return product;
     }
     @Override
-    public Product getSingleProduct(Long id) {
+    public Product getSingleProduct(Long id) throws ProductNotExistsException {
         //Calling 3rd party API through Dto object.
         FakeStoreProductDto productDto = restTemplate.getForObject(
                 //Make a get call for below URL to get the response
                 "https://fakestoreapi.com/products/"+id,
                 FakeStoreProductDto.class
         );
+
+        if(productDto==null){
+            throw new ProductNotExistsException("Product with id: "+id+" doesn't exist");
+        }
 /*
 so below line is trying convert the response obtained by calling the url (with FakeStoreProductDto class object type) and
 return the object in the form(product) that we require from the ProductDto type.
@@ -87,6 +92,48 @@ return the object in the form(product) that we require from the ProductDto type.
         return convertFakeStoreProductToProduct(productDto);
     }
 
+
+
+
+    @Override
+    public Product updateProduct(Long id, Product product){
+        //return new Product();
+        FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
+
+        // Set only the fields that you want to update
+        if (product.getTitle() != null) {
+            fakeStoreProductDto.setTitle(product.getTitle());
+        }
+
+        if (product.getPrice() != 0) {
+            fakeStoreProductDto.setPrice(product.getPrice());
+        }
+
+        if (product.getDescription() != null) {
+            fakeStoreProductDto.setDescription(product.getDescription());
+        }
+
+        if (product.getImageUrl() != null) {
+            fakeStoreProductDto.setImage(product.getImageUrl());
+        }
+
+        RequestCallback requestCallback;
+
+        requestCallback = restTemplate.httpEntityCallback(fakeStoreProductDto, FakeStoreProductDto.class);
+
+        HttpMessageConverterExtractor<FakeStoreProductDto> responseExtractor =
+                new HttpMessageConverterExtractor<>(FakeStoreProductDto.class, restTemplate.getMessageConverters());
+
+        FakeStoreProductDto response= restTemplate.execute("https://fakestoreapi.com/products/" +id, HttpMethod.PATCH, requestCallback, responseExtractor);
+
+        return convertFakeStoreProductToProduct(response);
+    }
+
+
+
+
+
+
     @Override
     public Product replaceproduct(Long id, Product product) {
         FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
@@ -94,7 +141,7 @@ return the object in the form(product) that we require from the ProductDto type.
         fakeStoreProductDto.setPrice(product.getPrice());
         fakeStoreProductDto.setImage(product.getDescription());
         fakeStoreProductDto.setImage(product.getImageUrl());
-        //restTemplate.exchange();
+        //restTemplate.exchange();- used this beacuse of lower level library
         //we are not using restTemplate.Put() For object because the API is returning us a JSON but
         // put returns a void ,so to avoid that we are using exchange
 
@@ -123,16 +170,15 @@ so when we put debug point and check-> all the product details were converted to
 Because this info- i.e List of FakesStoreProductDto is not available at runtime, so java(Rest template) internally tries to convert it into HashMap
 
 why HashMap-> what library does is, whatever JSON it gets- it tries to convert that into whatever best possible Object(Key-Value Pair)
-For that reason in java similar to List we have array , since we don't have generics issue in Array we can use it.
-*/
+For that reason in java similar to List we have array , since we don't have generics issue in Array we can use it.*/
         FakeStoreProductDto[] response = restTemplate.getForObject(
 
                 "https://fakestoreapi.com/products",
                 //since .getForObject expects class name as parameter, we are passing array of class name using .class keyword
                 FakeStoreProductDto[].class
         );
-//Although return type of method is in list, we get data in Json from the url,converting each json obj to our
-// dto(Product) object and adding all those products to list and returning theme
+/* Although return type of method is in list, we get data in Json from the url,converting each json obj to our
+dto(Product) object and adding all those products to list and returning theme*/
 
         List<Product> answer=new ArrayList<>();
         for(FakeStoreProductDto dto: response ){

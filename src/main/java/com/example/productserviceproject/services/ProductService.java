@@ -1,4 +1,5 @@
 package com.example.productserviceproject.services;
+import com.example.productserviceproject.Exceptions.ProductNotExistsException;
 import com.example.productserviceproject.models.Product;
 
 import java.util.ArrayList;
@@ -10,11 +11,15 @@ import java.util.List;
 public interface ProductService {
 
 
-    Product getSingleProduct(Long id);
+    Product getSingleProduct(Long id) throws ProductNotExistsException;
 
     List<Product> getALLProducts();
 
     Product replaceproduct(Long id, Product product);
+
+    Product updateProduct(Long id, Product product);
+
+
 }
 /*
 any class implementing ProductService should provide functionality to retrieve
