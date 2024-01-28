@@ -1,0 +1,22 @@
+Only Difference Between Mapped Super class and Table Class is
+Mapped Super class is not a Entity Class and Parent will not be mapped to any table in the database.
+But in case of Table Class type Parent will be mapped to a table in the database.
+
+How to use Table Per Class ?
+In this case User is an Entity Class and it is mapped to a table in the database.
+so annotate user class with @Entity and @Table(name="USER_DETAILS")
+
+to decide what kind of Inheritance?
+->use @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+
+So parent class is taken care f, now what about child class?
+->Mentor class is a child class of User class.
+1)will there be a table of Mentor class in the database?
+->yes, so annotate Mentor class with @Entity
+
+2)Do i need to put inheritance strategy for Mentor class?
+->No, Inheritance strategy only needs to be used in the parent(User) class.
+
+
+So the table structure of Both MappedSuperClass and TablePerClass will be like this
+the table of child class will have all attributes of child class and attributes of parent class as well.

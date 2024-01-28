@@ -1,0 +1,23 @@
+In MappedSuperclass will there be a Table of parent class
+-> No, there will be no table for parent class
+
+So just annotate your parent class with @MappedSuperclass-
+-> once i annotate in parent as MappedSuper class, all of the Parent attributes will be available
+ in child class Table
+
+Now what should child class be annotated with?(Will For the Child class a table will be created).
+-> Yes, a table will be created for child class and annotate your child class with @Entity and you are good to go.
+
+Now once annotated both child class will have tables created
+we can run the program now and see the output.
+
+
+Note: If you want to have a table for parent class as well then annotate your parent class with @Entity and @MappedSuperclass
+
+Properties of @MappedSuperclass
+it is not a Entity(Table) Class and it will not be mapped to any table in the database.
+Mapped Super class can be used to define common properties for multiple entities(Tables).
+Mapped Super class cannot be queried and cannot be used in table or Query.
+Mapped Super class cannot be used with Entity Inheritance.
+Mapped Super class cannot be a inner class.
+Mapped Super class can have associations with other entities(tables).

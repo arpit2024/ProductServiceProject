@@ -1,0 +1,36 @@
+Q) Do we have a Table for (User)Parent Class in this Approach?
+->Yes
+
+Q) Do we have a Table for (User)Child Class in this Approach?
+->No
+
+In single table there will be one table for parent which contains all of the attributes
+
+Here we will be having all of the columns of the parent class as well as columns of the child class within one table
+
+with that we will also be having a type column which will be having the type of the child class.
+
+for each type of user such as mentors/instructor we will be giving value of type integer
+for this we are using discriminator column annotation(which has name and type)
+
+
+
+Q)What if we have a user which is mentor and instructor ?
+Not possible, Disadvantage of this type.
+
+
+so when we run this in the output
+we will be having one table with all of the columns of the parent class as well as child class
+i.e
+id
+name
+email
+user_type
+favorite_student
+average_rating
+
+So if we save a user, id will be filled
+name will be filled
+email will be filled
+user_type will be filled as "0"
+rest other columns will be null

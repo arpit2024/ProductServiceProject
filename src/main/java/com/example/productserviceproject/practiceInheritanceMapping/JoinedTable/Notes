@@ -1,0 +1,27 @@
+
+In this Type what all changes needs to be done in Parent Class(User) ?
+
+Q) will there be table of Parent (User)Class in this Approach ?
+->Yes
+
+Q) will there be table of Child (Mentor)Class in this Approach ?{
+->Yes- Annotate the class with entity
+
+But in Joined Table Approach, the Mentor(child)class will not have any entity from its parent class.
+Instead it just going to have the user id- th user which will have all of those attributes
+which is the primary key of the parent class.
+
+so for this reason we also use another annotation called
+@PrimaryKeyJoinColumn(name="user_id") in mentor class(which basically makes the user_id as a primary key and foreign key to the parent table)
+In this particular child table we will have a additional column called user_id which is a foreign key to the Parent table
+
+
+Similarly Attributes of Parent table are not available in Instructor class too,Hence we will have another column
+to join parent and child class tables.
+
+
+Note-
+In User Table/class we declared id,name,email.
+Ex:- we declared only one variable i.e AverageRating in Mentor class, hence we only get that and an user-id column in Mentor table.
+In child class the user_id column is not a primary key, it is a foreign key to the parent table.
+but if we need any primary key in child table then we need to remove @PrimaryKeyJoinColumn annotation and explicitly need to define @id in child class/table;
