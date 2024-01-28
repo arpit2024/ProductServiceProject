@@ -1,0 +1,62 @@
+since our 1st part of project we implemented api to call 3rd party APi
+as we used Fakestore Api to get products and categories details from DB
+
+For this reason we used interface in our Service package so that we can implement it
+whenever required, now in service package we will create another class- SelfProductService
+
+now we will implement our own api to get products and categories details from DB
+as soon as we implement all interface methods we will get below error
+
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Parameter 0 of constructor in com.example.productserviceproject.controller.ProductController
+required a single bean, but 2 were found:
+
+	- fakeStoreProductService: defined in file [C:\Users\ADMIN\IdeaProjects\ProductServiceProject\
+	target\classes\com\example\productserviceproject\services\FakeStoreProductService.class]
+
+	- myProductService: defined in file [C:\Users\ADMIN\IdeaProjects\ProductServiceProject\target\classes\com\
+	example\productserviceproject\services\MyProductService.class]
+
+
+so in springs context we have both beans available, so we need to tell spring which bean to use
+we have selfProductservice and FakestoreProductService objects.
+
+Now Product controller ask spring , hey spring please give me an object of Product Service-
+but spring is confused which object to give, so we need to tell spring which object to give- its called an ambiguous State
+
+in Simple words:-
+Controller is dependent upon interface, but there are 2 object that are implementing this interface,thate why spring is confused
+
+How to solve it?
+->we can annotate the class with @Primary,then whenever spring is confused it will give the object which is annotated with @Primary
+But still we can say what if Both are annotated with @Primary, then we can use @Qualifier annotation
+
+we can give name to our Service class
+@Service("SelfProductService")
+and wherever I need in controller we can use @Qualifier("SelfProductService") within constructor of controller.
+
+Noe there will be no confusion for spring, it will give the object which is annotated with @Qualifier("SelfProductService")
+
+
+Summary:-
+so when spring is storing these beans in its context, it will store with the name of class
+so when we are asking for object of Product Service, spring will give the object which is annotated with @Qualifier("SelfProductService")
+
+
+Q)what is benefit, we can directly use selfProduct service in constructor of controller
+As per question code is dependent on class not on interface,
+But we are using interface, so that we can use any service class in future, we can use FakeStoreProductService also
+just @Autowired
+         public ProductController(@Qualifier("FakeStoreProductService")ProductService productService){
+             this.productService=productService;
+         }
+our code is not dependent on any implementation.
+
+
+
+Similarly we can do the same for Category Service also-As Repository is dependent on Model
+ */

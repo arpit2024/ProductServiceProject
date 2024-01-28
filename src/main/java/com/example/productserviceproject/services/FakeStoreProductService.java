@@ -16,7 +16,7 @@ import java.util.List;
 
 //This class just calls the API- (Talks to the FakeStore API)
 
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
 //so i need RestTemplate object for this class so i declare it
 //But i dont want to create one by using "new" keyword, i want it from Application Context
@@ -26,17 +26,20 @@ public class FakeStoreProductService implements ProductService{
 //so create a constructor of fakeStoreService for the instance/variable of type RestTemplate
 
     @Autowired
-    // The reason i am able to autowire this is........check if ProductService is also a special class->if yes,
-    // there ia an Annotation of service/one of the implementation of ProductService is a special class than
-    // spring will automatically create an object of that and put it in Application Context.
+/* The reason i am able to autowire this is........check if ProductService is also a special class->if yes, there ia an
+ Annotation of service/one of the implementation of ProductService is a special class than spring will
+automatically  create an object of that and put it in Application Context.
+
+ */
     public FakeStoreProductService(RestTemplate restTemplate){
         this.restTemplate=restTemplate;
     }
 /*
 For the Autowired Part-if i want to inject a bean to other class how will i do it?
 -> Using Constructor
-in this constructor  i will take object of the class i wanted to inject
-And i will mark that particular thing with Autowire
+in this constructor, I will take an object of the class I wanted to inject
+And I will mark that particular thing with Autowire
+
  */
 
 /*
@@ -55,7 +58,7 @@ And i will mark that particular thing with Autowire
 
     private Product convertFakeStoreProductToProduct(FakeStoreProductDto fakeStoreProduct){
 /*
-Need of this Method:-
+Need of this Method: -
 so in below SingleProduct method i am calling Api details using the FakeStore Dto object for matching/mapping data similar to the JSON(Data pack obtained form the URl)
 
 But our service wants us to return the Product type, so i will have to convert from ProductDto to Product.
@@ -177,7 +180,7 @@ For that reason in java similar to List we have array , since we don't have gene
                 //since .getForObject expects class name as parameter, we are passing array of class name using .class keyword
                 FakeStoreProductDto[].class
         );
-/* Although return type of method is in list, we get data in Json from the url,converting each json obj to our
+/* Although a return type of method is in list, we get data in Json from the url,converting each json obj to our
 dto(Product) object and adding all those products to list and returning theme*/
 
         List<Product> answer=new ArrayList<>();

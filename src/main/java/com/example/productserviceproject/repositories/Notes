@@ -1,0 +1,18 @@
+So to implement selfProductService we get question how my service cass will be able to implement
+the methods-> via database
+
+So to talk to database service class needs a middle layer Called Repository.
+So since we are using JPA we will use Interface- Reason is detailed in "Spring Data JPA Notes"
+These are also called as 'dao'
+DAO-DataAccessObject focuses on abstracting and encapsulating the interaction with a data
+storage system (such as a database).
+DTO-DataTransferObject focuses on encapsulating and transferring data between different
+parts of a software application.
+
+So we will created a repository interface called ProductRepository-Annotate the class with @Repository
+-But till now we have not told JPA-Hey JPA in this particular interface i will be having lot
+of methods where i will be getting details wrt to Products-such as saving,deleting,fetching
+
+so in interface  method signature, mention it as
+- public interface ProductRepository extends JpaRepository<Product,Long>(){}
+ Datatype as Product and also mention datatype of Primary key of Product as Long
