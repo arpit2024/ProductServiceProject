@@ -13,6 +13,6 @@ So we will created a repository interface called ProductRepository-Annotate the 
 -But till now we have not told JPA-Hey JPA in this particular interface i will be having lot
 of methods where i will be getting details wrt to Products-such as saving,deleting,fetching
 
-so in interface  method signature, mention it as
+so in interface method signature,
+Parameter should be ->Datatype as Product and also mention datatype of Primary key of Product as Long
 - public interface ProductRepository extends JpaRepository<Product,Long>(){}
- Datatype as Product and also mention datatype of Primary key of Product as Long
