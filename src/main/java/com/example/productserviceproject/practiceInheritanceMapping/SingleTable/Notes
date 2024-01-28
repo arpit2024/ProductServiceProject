@@ -14,7 +14,6 @@ for each type of user such as mentors/instructor we will be giving value of type
 for this we are using discriminator column annotation(which has name and type)
 
 
-
 Q)What if we have a user which is mentor and instructor ?
 Not possible, Disadvantage of this type.
 

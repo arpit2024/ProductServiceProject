@@ -20,5 +20,18 @@ for Ex- this part is within Application Configuration Class
 
  so if we put this any controller class, still it would be considered/found, so all of these are just Markers
 
-*) so if anything is present in Spring's Application Contexte we can use it anywhere
+*) so if anything is present in Spring's Application Context we can use it anywhere
 ->so config package is something which we want to use overall
+
+//Steps for creating
+//1)create a class with @Entity annotation
+//2)create a interface that extends JpaRepository
+//3)create a service class that implements the interface
+//4)controller class that uses the service class
+//5)controller advice class that handles the exceptions
+//6)dto class that is used to send the response to the client
+//7)exception class that is used to throw the exception
+//8)exception dto class that is used to send the exception response to the client
+//9)repository class that extends JpaRepository
+//10)service implementation class that implements the service class
+//11)service interface that has the methods that are used to perform the crud operations

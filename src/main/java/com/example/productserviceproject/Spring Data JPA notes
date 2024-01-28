@@ -1,18 +1,21 @@
-just acting like a proxy.for any real world app DB is a very crucial component and it should be designed with utmost care.
+just acting like a proxy.for any real world app DB is a very crucial component and it should be
+designed with utmost care.
 
 ORM Library
 -----------
 O-> OBJECT
 R-> RELATIONAL
 M-> MAPPING
-It is a programming technique for converting data between incompatible type systems in relational databases and object-oriented programming languages.
+It is a programming technique for converting data between incompatible type systems in relational
+ databases and object-oriented programming languages.
  This creates, in effect, a “virtual object database” that can be used from within the programming language.
 
 *) It will reduce the need for you to write queries.
 *)Based on ORM method call we can perform CRUD operation on DB.
 one Famous example for ORM library- Hibernate
 
-Unless my application is dependent on Hibernate and i want to remove it and move for other, it will require lot of work to switch to other ORM library.
+Unless my application is dependent on Hibernate and i want to remove it and move for other,
+it will require lot of work to switch to other ORM library.
 
 
 so instead of one class directly depending on other- use Interface
