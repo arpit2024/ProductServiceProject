@@ -6,7 +6,7 @@ In the Product Repository what method do i need to write that will allow me to g
 ->findById
 Product FindById(Long id)- write this method in Product Repository
 
-Q) so what if we don;t have this Product Id in our database
+Q) so what if we don't have this Product Id in our database
 ->this will return Null
 
 Now The problem with  null is that it will throw an exception,
