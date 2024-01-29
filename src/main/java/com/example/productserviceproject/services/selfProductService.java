@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service("selfProductService")
@@ -27,7 +28,13 @@ public class selfProductService implements ProductService {
 
     @Override
     public Product getSingleProduct(Long id) throws ProductNotExistsException {
-        return null;
+
+        Optional<Product> productOptional=productRepository.findById(id);
+        if(productOptional.isEmpty()){
+            throw new ProductNotExistsException("Product with id "+id+" does not exists");
+        }
+        Product product=productOptional.get();
+        return product;
     }
 
     @Override
@@ -42,6 +49,16 @@ public class selfProductService implements ProductService {
 
     @Override
     public Product updateProduct(Long id, Product product) {
+        return null;
+    }
+
+    @Override
+    public boolean deleteProduct(Long id) {
+        return false;
+    }
+
+    @Override
+    public Product addNewProduct(Product product) {
         return null;
     }
 }

@@ -19,8 +19,14 @@ public interface ProductService {
 
     Product updateProduct(Long id, Product product);
 
+    boolean deleteProduct(Long id);
+    Product addNewProduct(Product product);
+
+/*    Product addNewProduct(String title,Double price,String categoryName,String description,String image_url);
+      If a service methods have a lot of parameters than we can use Builder or here i'm using just an object of Product as a parameter  */
 
 }
+
 /*
 any class implementing ProductService should provide functionality to retrieve
 a single product by its ID.

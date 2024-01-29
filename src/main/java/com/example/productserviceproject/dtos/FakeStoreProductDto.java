@@ -1,4 +1,6 @@
 package com.example.productserviceproject.dtos;
+
+//DTO stands for Data Transfer Object
 /*
 How do we make an API call to 3rd Party
 we need a Library to do the same- Maven(right side Icon)->Dependencies->Spring Web->imported a class called RestTemplate
@@ -22,6 +24,8 @@ import lombok.Setter;
 // this data(All attributes of JSON) has one-on-one mapping with the object of the FakeStoreDto class
 @Getter
 @Setter
+
+//DTO is used to ask user the minimal info which we can pass in controller
 public class FakeStoreProductDto {
 
     private Long id;

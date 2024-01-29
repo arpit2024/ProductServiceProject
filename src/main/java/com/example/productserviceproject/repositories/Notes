@@ -1,4 +1,4 @@
-So to implement selfProductService we get question how my service cass will be able to implement
+So to implement selfProductService we get question how my service class will be able to implement
 the methods-> via database
 
 So to talk to database service class needs a middle layer Called Repository.

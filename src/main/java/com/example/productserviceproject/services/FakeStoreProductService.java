@@ -132,9 +132,15 @@ return the object in the form(product) that we require from the ProductDto type.
         return convertFakeStoreProductToProduct(response);
     }
 
+    @Override
+    public boolean deleteProduct(Long id) {
+        return false;
+    }
 
-
-
+    @Override
+    public Product addNewProduct(Product product) {
+        return null;
+    }
 
 
     @Override

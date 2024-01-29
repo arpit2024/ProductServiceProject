@@ -1,0 +1,79 @@
+getSingleProduct()- Implementing First API Method
+
+Do i have a object of Product repository>-> YES
+
+In the Product Repository what method do i need to write that will allow me to getSingleProduct
+->findById
+Product FindById(Long id)- write this method in Product Repository
+
+Q) so what if we don;t have this Product Id in our database
+->this will return Null
+
+Now The problem with  null is that it will throw an exception,
+Ex:- in our case we are trying to get the product by id, but if we don't have that product
+in our database then it will return null and if we try to access the null object then it will
+throw an exception
+
+in selfProductService class we have a method called getSingleProduct()
+in this method we are calling the findById() method of ProductRepository
+        Product pro =ProductRepository.findById(id);// id=1L
+
+and this method will return a Product object as null
+if i try to access the null say  pro.getTitle() then it will throw an exception- null pointer exception
+
+*) So we need to do things that can be checked at compile time,
+-> so instead of just returning the Product object we can return Optional<Product> object
+write this method
+
+1) in Product Repository
+    Optional<Product> FindById(Long id) ->
+
+2) In SelfProductService
+    Optional<Product> proOptional =ProductRepository.findById(id);// id=1L
+    if(proOptional.isPresent()){
+        Product pro = proOptional.get();
+    }
+    else{
+        //throw exception
+    }
+
+    OR
+
+    if(proOptional.isEmpty()){
+        //throw exception
+        throw new ProductNotFoundException("Product with id "+id+" not found");
+    }
+    else{
+        Product pro = proOptional.get();
+    }
+    return pro
+
+
+Q) if we can check before applying findById say to stop getting exception?
+-> yes we can check if the product is present in the database or not by using the
+            method ProductRepository.existsById()
+But this will lead to two database calls,
+1) one for checking if the product is present or not
+2) second for getting the product by id ->FindById() method
+
+Note:- getBy returns Entity, findBy returns Optional<Entity>
+
+Q) Why we created findById when JpaRepository provides it by default?
+-> Its a good practice to create our own method in the repository
+-> we can write our own logic in the method, like we can write a method that will return
+
+Lets say tomorrow we want to move from JPA to ourself writing DB queries(may be we are Moving to Db that JPA does not support)
+then we can write our own logic in the method
+
+Q) for a list of product how we can check?
+-> for a list of product can never be null, it can be empty
+we will get a empty List
+
+Q) what if we want to get a list of product by category id?
+-> we can write a method in ProductRepository
+    List<Product> findByCategoryId(Long id);
+
+Q) what if we want to get a list of product by category id and active?
+-> we can write a method in ProductRepository
+    List<Product> findByCategoryIdAndActive(Long id,boolean active);
+
