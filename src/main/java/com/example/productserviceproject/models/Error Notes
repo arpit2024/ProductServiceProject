@@ -1,0 +1,54 @@
+Error:-Need to set ID value Manually
+
+So after writing addProducts method completely the spring run successfully
+But once i try to send a POST request from the POSTMAN i got error.
+
+so when i tried to check in the logs, in intellij the error in 1st line was
+org.hibernate.id.IdentifierGenerationException: Identifier of entity 'com.example.productserviceproject.models.Product' must be manually assigned before calling 'persist()'
+
+Here behind the scene Save() method is calling Persist() method.
+The problem is , if we go wherever we have set ID,Model Package -(BaseModel/Product /category)class we have to set ID manually.
+
+But here i have just declared it as
+        private Long id;
+i have not told Database from where to generate this ID Automatically(No Strategy).
+in this case,DB expect user to provide ID manually or tell DB to generate itself.
+
+so we need to use annotation for DB to create Auto Increment ID
+@GeneratedValue(strategy = GenerationType.AUTO)
+
+
+In ProductController Class
+-------------------------------
+Q)how to dynamically set the category id? becoz one who save product may not know the id of the category?
+-then we need some complex logic
+do in addNew Product service method we need to write the logic
+
+@PostMapping
+    public Product addNewProduct(@RequestBody Product product){
+        Category category=product.getCategory();
+        if(category.getId() != null){
+            Category savedCategory=categoryRepository.save(category);//this will return the category that is saved
+            product.setCategory(savedCategory);
+        }
+
+        return productService.addNewProduct(product);
+
+Or say Controller will never know/ask the id of the category
+Optional<Category> categoryOptional=categoryRepository.findByName(product.getCategory().getName());
+
+        if(categoryOptional.isEmpty()){
+            Category savedCategory=categoryRepository.save(product.getCategory());
+            product.setCategory(savedCategory);
+        }else{
+            product.setCategory(categoryOptional.get());
+        }
+
+In Category Repository we add another method
+Optional<Category> findByName(String name);
+
+Now After editing the below code, we just ask the name from people and do the task
+No need to ask any id/thing from the USER
+But here we need Minimum 2 DB calls -
+    1st to check if category exist or not
+    2nd to save the category if not exist

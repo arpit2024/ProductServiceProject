@@ -59,6 +59,6 @@ public class selfProductService implements ProductService {
 
     @Override
     public Product addNewProduct(Product product) {
-        return null;
+        return productRepository.save(product);
     }
 }

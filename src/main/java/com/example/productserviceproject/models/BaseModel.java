@@ -1,5 +1,7 @@
 package com.example.productserviceproject.models;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
@@ -15,6 +17,7 @@ import java.util.Date;
 
 public class BaseModel {
     @Id//primary key
+    @GeneratedValue(strategy = GenerationType.AUTO)//auto increment
     private Long id;
     private Date createdAt;
     private Date lastUpdatedAt;

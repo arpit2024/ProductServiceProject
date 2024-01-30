@@ -3,6 +3,7 @@ package com.example.productserviceproject.controller;
 // The Controller will get the request from the user and then call the relevant service
 //when it gets the response from service controller will give it back to the user
 import com.example.productserviceproject.Exceptions.ProductNotExistsException;
+import com.example.productserviceproject.models.Category;
 import com.example.productserviceproject.models.Product;
 import com.example.productserviceproject.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.productserviceproject.repositories.CategoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +31,13 @@ import java.util.List;
     //Need an object of service, But instead of creating an object of FakestoreProductService,
     // i am using dependency injection through constructor
     private ProductService productService;
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    public ProductController(@Qualifier("selfProductService")ProductService productService){
+    public ProductController(@Qualifier("selfProductService")ProductService productService,
+                             CategoryRepository categoryRepository){
         this.productService=productService;
+        this.categoryRepository = categoryRepository;
     }
 
 
@@ -71,10 +76,23 @@ import java.util.List;
 //Using @RequestBody annotation, i will get the parameters/Data in the Body
     @PostMapping
     public Product addNewProduct(@RequestBody Product product){
-        Product p=new Product();
-        p.setTitle("A new Product");
-        return p;
+//        Product p=new Product();
+//        p.setTitle("A new Product");
+//        return p;
+        Category category=product.getCategory();
+        if(category.getId() != null){
+            Category savedCategory=categoryRepository.save(category);//this will return the category that is saved
+            product.setCategory(savedCategory);
+        }
+        return productService.addNewProduct(product);//this will return the product that is saved
+/*
+So (@RequestBody Product product) in this product there will be a category object, but that category
+ may or may-not be saved into the database yet. How will I know if it exists or not by checking if that category has a id or not
+    if it doesn't exist than->if(category.getId() != null)
+    than first we will save the category and then in a product object we Update it
+*/
     }
+
 
 //Partial Update we use Patch
     @PatchMapping("/{id}")
