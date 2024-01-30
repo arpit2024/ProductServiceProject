@@ -49,8 +49,28 @@ public class selfProductService implements ProductService {
 
     @Override
     public Product updateProduct(Long id, Product product) {
-        return null;
+        Optional<Product> productOptional=productRepository.findById(id);
+
+        if(productOptional.isEmpty()){
+            throw new RuntimeException("Product with id "+id+" does not exists");
+        }
+        Product savedProduct=productOptional.get();
+        if(product.getTitle() != null){
+            //so if the title that i have received in the method parameter is not null than,i have to update it.
+            savedProduct.setTitle(product.getTitle());
+        }
+        if(product.getDescription()!= null){
+            savedProduct.setDescription(product.getDescription());
+        }
+        if(product.getPrice()!= null){
+            savedProduct.setPrice(product.getPrice());
+        }
+        if(product.getImageUrl() != null){
+            savedProduct.setImageUrl(product.getImageUrl());
+        }
+        return productRepository.save(savedProduct);
     }
+    //Here I have to update the particular fields, so I have to get the product from the database for ID
 
     @Override
     public boolean deleteProduct(Long id) {

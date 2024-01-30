@@ -97,7 +97,7 @@ So (@RequestBody Product product) in this product there will be a category objec
 //Partial Update we use Patch
     @PatchMapping("/{id}")
     public Product updateProduct(@PathVariable("id") Long id,@RequestBody Product product){
-        return new Product();
+        return productService.updateProduct(id,product);
     }
 
 //For complete Update we use Put

@@ -16,7 +16,8 @@ public class Product extends BaseModel {
 
 
     private String title;
-    private double price;
+    private Double price;
+    //Double should be Capital 'D'ouble not double
 @ManyToOne
     private Category category;
     private String description;
