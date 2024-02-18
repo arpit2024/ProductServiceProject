@@ -16,10 +16,10 @@ throw an exception
 
 in selfProductService class we have a method called getSingleProduct()
 in this method we are calling the findById() method of ProductRepository
-        Product pro =ProductRepository.findById(id);// id=1L
+        Product product =ProductRepository.findById(id);// id=1L
 
 and this method will return a Product object as null
-if i try to access the null say  pro.getTitle() then it will throw an exception- null pointer exception
+if i try to access the null say  product.getTitle() then it will throw an exception- null pointer exception
 
 *) So we need to do things that can be checked at compile time,
 -> so instead of just returning the Product object we can return Optional<Product> object
@@ -62,7 +62,7 @@ Q) Why we created findById when JpaRepository provides it by default?
 -> Its a good practice to create our own method in the repository
 -> we can write our own logic in the method, like we can write a method that will return
 
-Lets say tomorrow we want to move from JPA to ourself writing DB queries(may be we are Moving to Db that JPA does not support)
+Lets say tomorrow we want to move from JPA to ourself writing DB queries(Imagine we are Moving to DB that JPA does not support)
 then we can write our own logic in the method
 
 Q) for a list of product how we can check?

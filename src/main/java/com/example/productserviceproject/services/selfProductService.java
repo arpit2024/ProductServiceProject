@@ -1,6 +1,7 @@
 package com.example.productserviceproject.services;
 
 import com.example.productserviceproject.Exceptions.ProductNotExistsException;
+import com.example.productserviceproject.models.Category;
 import com.example.productserviceproject.models.Product;
 import com.example.productserviceproject.repositories.CategoryRepository;
 import com.example.productserviceproject.repositories.ProductRepository;
@@ -38,7 +39,13 @@ public class selfProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getALLProducts() {
+    public List<Product> getALLProducts() throws ProductNotExistsException {
+//        Optional<List<Product>> productOptional= Optional.ofNullable(productRepository.findAll());
+//        if(productOptional.isEmpty()){
+//            throw new ProductNotExistsException(" No Products exists");
+//        }
+//        List<Product> products=productOptional.get();
+//        return products;
         return null;
     }
 

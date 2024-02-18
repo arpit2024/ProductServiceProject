@@ -3,6 +3,7 @@ package com.example.productserviceproject.repositories;
 import com.example.productserviceproject.models.Category;
 import com.example.productserviceproject.models.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     List<Product> findByTitleContaining(String word);
 
+    //List<Product> findAll();
 
     long deleteByTitleIgnoreCase(String title);
 
@@ -24,6 +26,14 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
     Product save(Product product);
     //The return value of the save method is product that is saved(product with id)
 
+
+    @Query("select p.description,p.title from Product p where p.price = 120000  and p.description like '%best%'")
+    List<Product> SomeTask();
+    /*
+in product repository for a particular thing,we don't want ORM to automatically generate
+the query you want yourself to tell that this is how the query should work than we use
+HQL(Hibernate Query Language) type
+*/
 
 }
 

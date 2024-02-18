@@ -51,12 +51,13 @@ import java.util.List;
 
     Along with Response Entity we can send Headers as well.usually we use it when we implement Authentication->we will be sendng some data back as headers. */
     @GetMapping
-    public ResponseEntity<List<Product>> getALLProducts(){
+    public ResponseEntity<List<Product>> getALLProducts() throws ProductNotExistsException {
         ResponseEntity<List<Product>>response =new ResponseEntity<>(
                 productService.getALLProducts(), HttpStatus.NOT_FOUND
                 // since we have set status as NOT_FOUND, we will get 404 error
         );
         return response;
+        //return new ResponseEntity<>(productService.getALLProducts(),HttpStatus.OK);
         //return new ArrayList<>();
         //return productService.getALLProducts();
     }
@@ -111,11 +112,4 @@ So (@RequestBody Product product) in this product there will be a category objec
 
     }
 
-/*   Explained in Exception Notes 3rd point
-    @ExceptionHandler(ProductNotExistsException.class)
-    public ResponseEntity<Void> handleProductNotExistsException(){
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
-
- */
 }

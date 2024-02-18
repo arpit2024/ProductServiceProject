@@ -13,7 +13,7 @@ public interface ProductService {
 
     Product getSingleProduct(Long id) throws ProductNotExistsException;
 
-    List<Product> getALLProducts();
+    List<Product> getALLProducts() throws ProductNotExistsException;
 
     Product replaceproduct(Long id, Product product);
 
