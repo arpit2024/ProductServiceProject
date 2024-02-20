@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     List<Product> findByTitleContaining(String word);
 
-    //List<Product> findAll();
+    List<Product> findAll();
 
     long deleteByTitleIgnoreCase(String title);
 

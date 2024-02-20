@@ -56,8 +56,8 @@ import java.util.List;
                 productService.getALLProducts(), HttpStatus.NOT_FOUND
                 // since we have set status as NOT_FOUND, we will get 404 error
         );
-        return response;
-        //return new ResponseEntity<>(productService.getALLProducts(),HttpStatus.OK);
+        //return response;
+        return new ResponseEntity<>(productService.getALLProducts(),HttpStatus.OK);
         //return new ArrayList<>();
         //return productService.getALLProducts();
     }

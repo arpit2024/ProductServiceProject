@@ -40,13 +40,13 @@ public class selfProductService implements ProductService {
 
     @Override
     public List<Product> getALLProducts() throws ProductNotExistsException {
-//        Optional<List<Product>> productOptional= Optional.ofNullable(productRepository.findAll());
-//        if(productOptional.isEmpty()){
-//            throw new ProductNotExistsException(" No Products exists");
-//        }
-//        List<Product> products=productOptional.get();
-//        return products;
-        return null;
+        Optional<List<Product>> productOptional= Optional.ofNullable(productRepository.findAll());
+        if(productOptional.isEmpty()){
+            throw new ProductNotExistsException(" No Products exists");
+        }
+        List<Product> products=productOptional.get();
+        return products;
+        //return null;
     }
 
     @Override
