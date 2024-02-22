@@ -2,8 +2,10 @@ package com.example.productserviceproject.repositories;
 
 import com.example.productserviceproject.models.Category;
 import com.example.productserviceproject.models.Product;
+import com.example.productserviceproject.repositories.Projections.ProductWithidAndTitle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,16 +18,23 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     List<Product> findAll();
 
-    long deleteByTitleIgnoreCase(String title);
+    //long deleteByTitleIgnoreCase(String title);
 
-    List<Product> findByCategory(Category category);
+    //List<Product> findByCategory(Category category);
     //So here we cannot use or search my join type/method
 
+//Declared Queries
     Optional<Product> findById(Long id);
 
     Product save(Product product);
     //The return value of the save method is product that is saved(product with id)
 
+//HQL(Hibernate Query Language)
+
+    @Query("select p from Product p where p.id = :id")
+    List<Product> somethingsomething1(@Param("id") Long id);//Parameters
+    @Query("select p.id as id,p.title as title from Product p where p.id = 5")
+    List<ProductWithidAndTitle> somethingsomething();//HQL Projections
 
     @Query("select p.description,p.title from Product p where p.price = 120000  and p.description like '%best%'")
     List<Product> SomeTask();
@@ -34,6 +43,12 @@ in product repository for a particular thing,we don't want ORM to automatically 
 the query you want yourself to tell that this is how the query should work than we use
 HQL(Hibernate Query Language) type
 */
+
+
+// Native Query--> Real SQL Query
+    @Query(value="select * from product p where p.id=6 ", nativeQuery = true)
+    List<Product> nativeQTest();
+    //here i have to be care full about the column names and table names(Intellij will not give a suggestion)
 
 }
 

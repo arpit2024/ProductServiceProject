@@ -1,0 +1,163 @@
+(in Product Repo class)
+Note- Both HQL and Declared queries are JPA queries, and we can use either of them,
+but we can't use both at the same time.
+
+
+Both Declared and Derived queries contain the same methods, but the difference is that in the
+Declared queries we can write our own query, but in the Derived queries we can't write our own query,
+we have to use the methods that are already present in the JPA repository.
+
+HQL(Hibernate Query Language) is a query language, which is used to fetch the data from the database.
+-------------------------------
+How can we create a query using HQL
+whenever we want to write our own query, since its an interface(ProductRepository),we can't write our own query in the
+interface, so we have to write our own query in the implementation class.
+
+we can just put method name, but because we are declaring our own query we can use any(own) method name,
+we have to use @Query annotation
+
+Here in query,this is kind of mix of OOPS and SQl
+in query we are using class name instead of table name, and we are using variable name instead of column name.
+
+it is going to find each row of the table of
+the product class and get all the attributes and return it.
+Ex-
+        @Query("select p from Product p where p.id=51")
+            List<Products> somethingsomething();
+
+...............................Let us try this query , and run a test case on it.
+
+
+Q) JPA repository already have all the methods for fetching...why we need this HQL over JPA repository methods.
+--> JPA repository methods are very limited, and we can't do much with them, but with HQL we can do a lot of things.
+
+ex - we can use where clause, order by, group by, having, etc.
+
+in below Example we get all the attributes of product-
+
+        @Query("select p from Product p where p.id = 5")
+            List<Product> somethingsomething();
+
+But we have the liberty to select only the required attributes, we can use select clause,
+ and we can select only the required attributes.
+        @Query("select p.id, p.title from Product p where p.id = 5")-> this is not Possible in Declared queries
+
+Q) Benefits of using HQL over JPA repository methods?
+--> Suppose infuture if we choose postgreSql instead of SQL(Existing DB) if we use HQL then
+we don't have to change the queries,Because HQL is working based upon OOPS concepts,- it says whatever the place
+where i have stored the objects of the product class, from that particular place get me the name/description/title where id=5
+it doesn't care about which DB /what is the query syntax.->(HQL is an Abstraction over the Database).
+flowpath--->HQL->Hibernate->DB(SQl/PostgreSql/...)
+
+*)HQL gives you more Independence as in Declared queries we cannot custom select the attributes within a Product class.
+-----------------------------------------------------------------------------------------------------------------------
+
+HQL Projections
+------------
+Q) What is the use of projections?
+--> Projections are used to select only the required attributes, and we can use the interface to select only the required attributes.
+
+consider this query->can we get a product as return with just attributes such as id and title as of below query
+        @Query("select p.id, p.title from Product p where p.id = 5")
+            List<Product> somethingsomething();
+
+so we can create an interface with getters of only those attributes we want, and we can use that interface as return type
+and change above query to below query
+@Query("select p.id as id,p.title as title from Product p where p.id = 5")
+     List<ProductWithidAndTitle> somethingsomething();//HQL Projections
+in the output we get values of name/id.title for the given id.
+
+
+To Test the above query, we can do it in ProductServviceProjectApplicationTests.java class
+    List<ProductWithidAndTitle> products1=productRepository.somethingsomething();
+
+        for(ProductWithidAndTitle p:products1){
+            System.out.println(p.getId());
+            System.out.println(p.getTitle());
+        }
+
+Note-
+*)so if product class has no getter and setter this will fail
+*)no need to create classes(interfaces) of each of the combination of attributes.
+In single interface we can have as much as attributes -title, id, name, description.but in test
+query we can only return product with id and title.
+
+Q)what if we want   p.category.name
+  where category is another entity ?
+-> No code will work 100% , we need to find other way
+here we have not created a class to implement the interface,But some how spring is returning me an object of interface
+Spring is doing it internally
+
+Q)Can we create HQL for a noSQL ?
+->If Hibernate Supports it, then we can use HQL for noSQL also.
+Because HQL is a query for Hibernate.Based upon HQl, Hibernate will create real  query for the database
+------------------------------------------------------------------------------------------------------------
+
+Native SQL
+-----------
+Q) What is the use of Native SQL?
+--> Native SQL is used to write the queries in the native SQL language, and we can use the native SQL to write the queries.
+
+Q) Why do we need Native SQL?
+->While Hibernate, ORM ect have been created by Developers in optimized way for generic purpose,
+ORM will just see the methods and create query and execute it
+but in our case we may face low performance/anything for generalized query.
+
+so in such case we can use Native SQL to write own queries.
+
+Q) How can we write a complete Query using Native SQL?
+->We can use @Query annotation and we can use nativeQuery=true to write the native SQL query.
+
+Note:-
+*)In Native SQl i have to be care full about the column names and table names(Intellij will not give a suggestion)
+in HQl case we were talking about the name of attributes of the class which intellij new about
+
+let us say the name of column changes, in HQL type hibernate get know it as Hibernate decides.
+but here it is a real SQL query , it will be executed as it is in DataBase so we should be accurate
+and write complete/correct MYSQL syntax query.
+
+In-future if we change any table name or any modification in DB, than the code should also need to be changed.
+Normal Native Query
+@       Query(value="select * from product p where p.id=6 ", nativeQuery = true)
+            List<Product> nativeQTest();
+
+Test case in ProductServiceProjectApplicationTests.java class
+        List<Product> products2=productRepository.nativeQTest();
+
+Native Projections
+------------------
+Q) What is the use of Native Projections?
+--> Native Projections are used to select only the required attributes, and we can use the interface to select only the required attributes.
+
+Similar as done for HQL Projections we can do Native Projections also.
+    @Query(value="select p.id as id,p.title as title from Product p where p.id = 5", nativeQuery = true)
+        List<ProductWithidAndTitle> products2 =productRepository.nativeQTest();
+
+Test Case in ProductServiceProjectApplicationTests.java class
+    List<ProductWithidAndTitle> products2=productRepository.nativeQTest();
+
+        for(ProductWithidAndTitle p:products2){
+            System.out.println(p.getId());
+            System.out.println(p.getTitle());
+        }
+
+Special Case
+with all of the above queries wrote we didnt use Parameters
+so we can use by below method- 1) Declare the Parameter via Colon(:) and Name of Parameter
+and in method
+
+        @Query("select p from Product p where p.id = :id")
+            List<Product> somethingsomething1(@Param("id") Long id);//Parameters
+This method is going to take a Parameter ID, will put this parameter in the (:id) Query
+
+
+Summary:-(HQL vs Native)
+
+*) so its about loose coupling(flexibility) vs exact coupling(optimisation)
+1) In one case we are getting more flexibility we can easily change database.
+2) In other case we are getting more control, we are getting query exactly it want to be executed
+
+*) We will mostly use native query of a very complex situtaion, for the other things we can
+ use HQL, or rely on ORM
+
+*)Also in Native we can use Joins and other stuff as we get complete control

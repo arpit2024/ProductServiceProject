@@ -9,7 +9,7 @@ storage system (such as a database).
 DTO-DataTransferObject focuses on encapsulating and transferring data between different
 parts of a software application.
 
-So we will created a repository interface called ProductRepository-Annotate the class with @Repository
+So we will create a repository interface called ProductRepository-Annotate the class with @Repository
 -But till now we have not told JPA-Hey JPA in this particular interface i will be having lot
 of methods where i will be getting details wrt to Products-such as saving,deleting,fetching
 
