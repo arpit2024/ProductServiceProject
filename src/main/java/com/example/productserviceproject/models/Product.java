@@ -1,5 +1,6 @@
 package com.example.productserviceproject.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
@@ -18,8 +19,16 @@ public class Product extends BaseModel {
     private String title;
     private Double price;
     //Double should be Capital 'D'ouble not double
-@ManyToOne
+
+//@ManyToOne//Doesn't support MappedBy function. so MappedBy is used in Category class for OneToMany relation
+
+    //@ManyToOne(cascade = {CascadeType.ALL})- Explaination in Error notes
+
+    @ManyToOne
     private Category category;
+//if something happens to the product, do the similar thing to category.Ex- if someone deletes/update/create
+// the product then do the same/cascade it to category.
+
     private String description;
     private String imageUrl;
 //  Non-Primitive attributes are the type whose data type is another class.

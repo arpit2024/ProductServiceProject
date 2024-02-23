@@ -11,13 +11,15 @@ import java.util.Date;
 
 @Getter
 @Setter
-@MappedSuperclass
+@MappedSuperclass//Explained in Error notes
+//Here we have used InheritanceType as MappedSuperclass
 
 //Hey this class is just to have the attributes no need to create the table of this class
 
 public class BaseModel {
     @Id//primary key
-    @GeneratedValue(strategy = GenerationType.AUTO)//auto increment
+    @GeneratedValue(strategy = GenerationType.AUTO)//Explained in Error notes
+    //auto increment the value of id
     private Long id;
     private Date createdAt;
     private Date lastUpdatedAt;
