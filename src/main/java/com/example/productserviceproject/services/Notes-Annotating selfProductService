@@ -4,7 +4,7 @@ i.e we used FakeStore Api to get products and categories details from DB
 For this reason we used interface in our Service package so that we can implement it
 whenever required, now in service package we will create another class- SelfProductService
 
-now we will implement our own api to get products and categories details from DB
+In this we will implement our own api to get products and categories details from DB
 as soon as we implement all interface methods in selfProductService class and run casually
 we will get below error
 

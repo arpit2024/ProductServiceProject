@@ -1,6 +1,7 @@
 package com.example.productserviceproject;
 
 import com.example.productserviceproject.models.Product;
+import com.example.productserviceproject.repositories.CategoryRepository;
 import com.example.productserviceproject.repositories.ProductRepository;
 import com.example.productserviceproject.repositories.Projections.ProductWithidAndTitle;
 import jakarta.transaction.Transactional;
@@ -17,6 +18,9 @@ class ProductServiceProjectApplicationTests {
 
     @Autowired
         private ProductRepository productRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
 //        public ProductServiceProjectApplicationTests(ProductRepository productRepository) {
 //            this.productRepository = productRepository;
@@ -52,6 +56,8 @@ class ProductServiceProjectApplicationTests {
 
         // Native Query Test
         List<Product> products2=productRepository.nativeQTest();
+
+        categoryRepository.findById(1L);
     }
 
 }

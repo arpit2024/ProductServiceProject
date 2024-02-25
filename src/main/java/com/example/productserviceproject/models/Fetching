@@ -1,0 +1,46 @@
+
+Type 1:- MappedSuperclass strategy
+BaseModel and category are the parent-child relationship
+here we don't need a separate table for BaseModel as per the Inheritance Mapping type.
+this class is just to have the attributes no need to create the table of this class
+everything within parent class will come into child class
+
+
+Fetching
+----------
+when you are fetching the obj of the attributes they can either fetched immediately or they can be
+fetched only when you are accessing them.
+
+lazy don't fetch the attributes of other classes until you access them
+By default a collection is lazy loaded//fetch=FetchType.LAZY, but we can change it to eager loaded
+
+
+Testcase used in class ProductServiceApplicationTests
+------------------------------------------------------
+1) categoryRepository.findById(1L);
+the Category class would have below attributes
+        @OneToMany(fetch = FetchType.EAGER, mappedBy = "category", cascade = CascadeType.REMOVE)
+        private List<Product> products;
+
+Here eager fetch will require a join query to fetch the products of the category
+But if we use LAZY in above command than, there would be no join used and we would not fetch the products
+when we are fetching the category obj.
+
+2)Having Possibility of both Eager and Lazy fetch-by using if scenario
+Optional<Category> category = categoryRepository.findById(52L);
+//Here lets say there is some condition and i want to fetch the products only if the condition is true
+        if (true) {
+           System.out.println("Getting Products");
+           Category category1 = category.get();
+           List<Product> products2 = category1.getProducts();
+           products2.get(0).getImageUrl();
+        }
+ In this scenario, if the product is lazily fetched, then it will be fetched only
+ i make this line call,because before this i dont need product obj.
+                List<Product> products2 = category1.getProducts();
+
+ so i can only end up if condition hardly around 2% of the cases, it will save my time
+ as i dont need to use Join in the 2% query ,but if i need the details of the product i will make separate query.
+This is the benefit of lazy loading
+ */
+

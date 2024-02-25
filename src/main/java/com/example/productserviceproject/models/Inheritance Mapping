@@ -1,7 +1,0 @@
-
-Type 1:- MappedSuperclass strategy
-BaseModel and category are the parent-child relationship
-here we don't need a separate table for BaseModel as per the Inheritance Mapping type.
-this class is just to have the attributes no need to create the table of this class
-everything within parent class will come into child class
-

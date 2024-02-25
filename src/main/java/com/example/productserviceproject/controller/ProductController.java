@@ -67,7 +67,7 @@ import java.util.List;
     // both id highlighted in green color should've same name,but parameter-Long- id can be different name
     public Product getsingleProduct(@PathVariable("id") Long id)throws ProductNotExistsException{
         //int x=1/0; written this to check arithmatic exception handler method -
-        // Exceptions explaines detail in controlladvice class Notes
+        // Exceptions explaines detail in controlladvice class Notes-Annotating selfProductService
 
         return productService.getSingleProduct(id);
     }

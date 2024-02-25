@@ -9,13 +9,13 @@ import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
-@Setter
-@MappedSuperclass//Explained in Error notes
+
 //Here we have used InheritanceType as MappedSuperclass
 
 //Hey this class is just to have the attributes no need to create the table of this class
-
+@Getter
+@Setter
+@MappedSuperclass//Explained in Error notes
 public class BaseModel {
     @Id//primary key
     @GeneratedValue(strategy = GenerationType.AUTO)//Explained in Error notes

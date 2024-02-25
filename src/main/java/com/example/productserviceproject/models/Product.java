@@ -1,18 +1,15 @@
 package com.example.productserviceproject.models;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-@Getter
-@Setter
-@Entity
+
 //@entity annotation is used to mark the class as an entity class
 //so that hibernate can recognize it as an entity class
 //and create a table for it in the database
-
+@Getter
+@Setter
+@Entity
 public class Product extends BaseModel {
 
 
@@ -23,7 +20,7 @@ public class Product extends BaseModel {
 //@ManyToOne//Doesn't support MappedBy function. so MappedBy is used in Category class for OneToMany relation
 
     //@ManyToOne(cascade = {CascadeType.ALL})- Explaination in Error notes
-
+    //@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @ManyToOne
     private Category category;
 //if something happens to the product, do the similar thing to category.Ex- if someone deletes/update/create
