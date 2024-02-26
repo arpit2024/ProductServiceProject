@@ -2,6 +2,15 @@ getSingleProduct()- Implementing First API Method
 
 Do i have a object of Product repository>-> YES
 
+why do i need Product Repository and product from it?
+-> to get the product from the database and to return the product to the user
+
+Q) How do i get the product from the database?
+-> by using the method findById() in the Product Repository
+
+Q)why do in need the object of Product Repository?
+-> to call the method findById() of Product Repository
+
 In the Product Repository what method do i need to write that will allow me to getSingleProduct
 ->findById
 Product FindById(Long id)- write this method in Product Repository

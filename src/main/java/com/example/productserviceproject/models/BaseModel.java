@@ -17,9 +17,11 @@ import java.util.Date;
 @Setter
 @MappedSuperclass//Explained in Error notes
 public class BaseModel {
-    @Id//primary key
-    @GeneratedValue(strategy = GenerationType.AUTO)//Explained in Error notes
+
+    //@GeneratedValue(strategy = GenerationType.AUTO)//Explained in Error notes
     //auto increment the value of id
+    @Id//primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Date createdAt;
     private Date lastUpdatedAt;

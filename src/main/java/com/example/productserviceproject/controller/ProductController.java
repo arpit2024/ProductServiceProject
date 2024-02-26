@@ -75,6 +75,8 @@ import java.util.List;
 //Typically, when we have to send a lot of parameters in request i.e complete object,
 //we can send it in the part of body object/Data
 //Using @RequestBody annotation, i will get the parameters/Data in the Body
+
+    //Adding a new product --> POSt Request
     @PostMapping
     public Product addNewProduct(@RequestBody Product product){
 //        Product p=new Product();
@@ -101,7 +103,7 @@ So (@RequestBody Product product) in this product there will be a category objec
         return productService.updateProduct(id,product);
     }
 
-//For complete Update we use Put
+//For complete Update/Replacing Product we use Put
     @PutMapping("/{id}")
     public Product replaceProduct(@PathVariable("id") Long id,@RequestBody Product product){
         return new Product();
@@ -109,7 +111,7 @@ So (@RequestBody Product product) in this product there will be a category objec
 
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable("id") Long id){
-
+        productService.deleteProduct(id);
     }
 
 }

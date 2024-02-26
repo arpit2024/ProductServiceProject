@@ -50,10 +50,9 @@ public class selfProductService implements ProductService {
     }
 
     @Override
-    public Product replaceproduct(Long id, Product product) {
+    public Product replaceproduct(Long id, Product product){
         return null;
     }
-
     @Override
     public Product updateProduct(Long id, Product product) {
         Optional<Product> productOptional=productRepository.findById(id);
@@ -86,13 +85,13 @@ public class selfProductService implements ProductService {
 
     @Override
     public Product addNewProduct(Product product) {
-//        Optional<Category> categoryOptional=categoryRepository.findByName(product.getCategory().getName());
-//        if(categoryOptional.isEmpty()){
-//            product.setCategory(categoryRepository.save(product.getCategory()));
-//        }
-//        else{
-//            product.setCategory(categoryOptional.get());
-//        }
+        Optional<Category> categoryOptional=categoryRepository.findByName(product.getCategory().getName());
+        if(categoryOptional.isEmpty()){
+            product.setCategory(categoryRepository.save(product.getCategory()));
+        }
+        else{
+            product.setCategory(categoryOptional.get());
+        }
         return productRepository.save(product);
     }
 }
