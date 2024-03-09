@@ -35,3 +35,31 @@ for Ex- this part is within Application Configuration Class
 //9)repository class that extends JpaRepository
 //10)service implementation class that implements the service class
 //11)service interface that has the methods that are used to perform the crud operations
+
+Spring Project Starters- Dependencies
+----------------------------------------
+spring-boot-starter-web
+-Build web including RESTful, Applications using Spring MVC. Uses Apache Tomcat as
+the default embedded container.
+
+spring-boot-devtools
+–it is used if any change made to code,devtool will automatically restart the server otherwise we have to
+manually (stopit - modify – restart) Fast Application Restart
+
+spring-boot-configuration-processor
+-Configuration Metadata Annotation Processor for Spring Boot
+
+spring-boot-starter-test
+–it is used to test the application using JUnit, Mockito, Hamcrest and Spring Test modules.
+
+lombhok
+–it is used to generate the getters, setters, toString, equals and hashCode methods with the
+ help of annotations.
+
+spring-boot-starter-actuator
+-It is used to monitor and manage the application. It includes built-in endpoints like /health, /metrics,
+/info, /env, /beans, /dump, /trace, /heapdump
+
+spring-boot-starter-data-jpa
+-it is used to perform the database operations using JPA (Java Persistence API) and Hibernate.
+-It is used to interact with the relational databases. It is a combination of spring data, spring orm and hibernate.

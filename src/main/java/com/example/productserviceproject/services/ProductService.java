@@ -19,7 +19,7 @@ public interface ProductService {
 
     Product updateProduct(Long id, Product product);
 
-    boolean deleteProduct(Long id);
+    void deleteProduct(Long id);
     Product addNewProduct(Product product);
 
 /*    Product addNewProduct(String title,Double price,String categoryName,String description,String image_url);

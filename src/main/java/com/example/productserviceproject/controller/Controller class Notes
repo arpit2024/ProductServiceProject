@@ -17,5 +17,6 @@ The ProductController class is expected to have additional methods (not shown in
 related to products, such as retrieving a list of products (getALLProducts()), getting a single product by ID (getSingleProduct()),
 adding a new product (addNewProduct()), updating a product (updateProduct() and replaceProduct()), and deleting a product (deleteProduct()).
 
-The actual implementation of these methods will involve interactions with the ProductService to perform business logic related to products.
+The actual implementation of these methods will involve interactions with the ProductService(DataBase )
+ to perform business logic related to products.
 For example, the getSingleProduct() method will call the ProductService to retrieve a single product from the database.

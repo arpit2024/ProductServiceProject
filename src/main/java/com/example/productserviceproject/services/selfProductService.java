@@ -51,7 +51,18 @@ public class selfProductService implements ProductService {
 
     @Override
     public Product replaceproduct(Long id, Product product){
-        return null;
+        Optional<Product> productOptional=productRepository.findById(id);
+
+        if(productOptional.isEmpty()){
+            throw new RuntimeException("Product with id "+id+" does not exist");
+        }
+        Product savedProduct=productOptional.get();
+        savedProduct.setTitle(product.getTitle());
+        savedProduct.setPrice(product.getPrice());
+        savedProduct.setDescription(product.getDescription());
+        savedProduct.setImageUrl(product.getImageUrl());
+
+        return productRepository.save(savedProduct);
     }
     @Override
     public Product updateProduct(Long id, Product product) {
@@ -79,8 +90,8 @@ public class selfProductService implements ProductService {
     //Here I have to update the particular fields, so I have to get the product from the database for ID
 
     @Override
-    public boolean deleteProduct(Long id) {
-        return false;
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
     }
 
     @Override

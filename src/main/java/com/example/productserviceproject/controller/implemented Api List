@@ -1,7 +1,10 @@
 Implemented
-getSingleProduct
-addNewproduct- PUT
+getAllProducts - GET
+getSingleProduct - GET
+addNewproduct- POST
 updateProduct- PATCH
+ReplaceProduct- PUT
+
 
 Products
 Get all products-------------
@@ -12,4 +15,8 @@ Get all categories
 Get in category
 Add new product-------------
 Update a product------------
-Delete a product
+Delete a product------------
+
+
+
+

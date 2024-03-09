@@ -133,8 +133,8 @@ return the object in the form(product) that we require from the ProductDto type.
     }
 
     @Override
-    public boolean deleteProduct(Long id) {
-        return false;
+    public void deleteProduct(Long id) {
+        return ;
     }
 
     @Override
