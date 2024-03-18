@@ -25,12 +25,12 @@ public class FakeStoreProductService implements ProductService{
 
 //so create a constructor of fakeStoreService for the instance/variable of type RestTemplate
 
-    @Autowired
+
 /* The reason i am able to autowire this is........check if ProductService is also a special class->if yes, there ia an
  Annotation of service/one of the implementation of ProductService is a special class than spring will
 automatically  create an object of that and put it in Application Context.
-
  */
+    @Autowired
     public FakeStoreProductService(RestTemplate restTemplate){
         this.restTemplate=restTemplate;
     }
