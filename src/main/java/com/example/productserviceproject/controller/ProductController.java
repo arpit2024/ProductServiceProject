@@ -61,23 +61,23 @@ please send the api request to that method
     //Here i have received a token, to verify it i'll need to ask the user service-create Utility class to verify the token
 
         //Implemented Authentication
-        UserDto userDto = authenticationCommons.validateToken(token);
-        if (userDto == null) {
-            //if you are not Authenticated, then you are not allowed to access the products
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-        boolean isAdmin = false;
-
-        //Implemented Role-Based Access Control
-        for (Role role: userDto.getRole()) {
-            if (role.getName().equals("ADMIN")) {
-                isAdmin = true;
-                break;
-            }
-        }
-        if (!isAdmin){
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+//        UserDto userDto = authenticationCommons.validateToken(token);
+//        if (userDto == null) {
+//            //if you are not Authenticated, then you are not allowed to access the products
+//            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//        }
+//        boolean isAdmin = false;
+//
+//        //Implemented Role-Based Access Control
+//        for (Role role: userDto.getRole()) {
+//            if (role.getName().equals("ADMIN")) {
+//                isAdmin = true;
+//                break;
+//            }
+//        }
+//        if (!isAdmin){
+//            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+//        }
 
 //Once validated in the above part, you can keep doing your work
         ResponseEntity<List<Product>>response =new ResponseEntity<>(
